@@ -3,6 +3,8 @@ import { ErrorPopup } from './ErrorPopup';
 import { Eye, EyeOff } from 'lucide-react';
 import { useRecoilState } from 'recoil';
 import { signinState } from '../atom';
+import { signin } from '../api/signin';
+import { useNavigate } from 'react-router-dom';
 
 export const Signin = () => {
     const [_signin, setSignin] = useRecoilState(signinState);
@@ -10,14 +12,27 @@ export const Signin = () => {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
+
+    const handleSignin = async () => {
+        const success = await signin({
+            email,
+            password
+        });
+
+        if(success==false) {
+            setError("Unable to signin!!");
+        } else {
+           navigate(`../user/${email}`);
+        }
+    }
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold mb-6 text-center">Sign in to Stratus</h1>
         
         {error && <ErrorPopup message={error} onClose={() => setError(null)} />}
-        {/* // handleSignin();  */}
-        <form onSubmit={(e) => { e.preventDefault(); }} className="space-y-4">
+        <form onSubmit={(e) => { e.preventDefault(); handleSignin(); }} className="space-y-4">
             <div>
             <input
                 type="email"

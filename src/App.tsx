@@ -2,14 +2,15 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './App.css';
 import MouseLight from "./components/MouseLight";
 import { Landing } from "./pages/Login";
+import { UserPage } from "./pages/UserPage";
 
 function App() {
-
   return (
     <div className='bg-[#000000] min-h-screen'>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Landing />} />
+          <Route path='/user/:email' element={<UserPage />} />
           {/* <Route path='/projects' element={<AllProjects />} /> */}
         </Routes>
         <MouseLight color="31, 81, 255" size={1000} opacity={0.2} />

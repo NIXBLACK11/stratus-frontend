@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ErrorPopup } from './ErrorPopup';
 import { Eye, EyeOff } from 'lucide-react';
 import { useRecoilState } from 'recoil';
 import { signinState } from '../atom';
+import { signup } from '../api/signup';
 
 export const Signup: React.FC = () => {
     const [_signin, setSignin] = useRecoilState(signinState);
@@ -13,14 +14,22 @@ export const Signup: React.FC = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleSignup = async () => {
         if (password !== confirmPassword) {
             setError("Passwords do not match!!");
             return;
         }
-        // Add your signup logic here
-        console.log("Signup with:", email, password);
+
+        const success = await signup({
+            email,
+            password
+        });
+
+        if(success==false) {
+            setError("Email already registered");
+        } else {
+           setSignin(true);
+        }
     };
 
     return (
@@ -29,7 +38,7 @@ export const Signup: React.FC = () => {
             
             {error && <ErrorPopup message={error} onClose={() => setError(null)} />}
             
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={(e) => { e.preventDefault(); handleSignup(); }} className="space-y-4">
                 <div>
                     <input
                         type="email"
