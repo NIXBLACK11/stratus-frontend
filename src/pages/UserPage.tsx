@@ -3,9 +3,15 @@ import { getCookie } from "../utils/saveCookie";
 import { useEffect, useState } from "react";
 import { validate } from "../api/validate";
 import { ErrorPopup } from "../components/ErrorPopup";
+import { Menu } from "../components/Menu";
+import { Projects } from "../components/Projects";
+import { useRecoilState } from "recoil";
+import { menuState, emailState, errorState } from "../atom";
 
 export const UserPage = () => {
-    const [error, setError] = useState<string | null>(null);
+    const [_email, setEmail] = useRecoilState(emailState);
+    const [menu, setMenu] = useRecoilState(menuState);
+    const [error, setError] = useRecoilState(errorState);
 
     const { email } = useParams<{ email: string }>();
     const token = getCookie("jwtToken");
@@ -22,17 +28,26 @@ export const UserPage = () => {
                 if (!valid) {
                     setError("Invalid request");
                     navigate('/');
+                    return;
                 }
             }
+            setEmail(email);
         };
 
         fetchData();
     }, [email, token, navigate]);
 
     return (
-        <div>
+        <div className="m-0 p-0 bg-transparent">
             {error && <ErrorPopup message={error} onClose={() => setError(null)} />}
-
+            <div className="flex flex-row">
+                <div className="w-[30%] min-h-screen m-0 p-0">
+                    <Menu/>
+                </div>
+                <div className="w-[70%] min-h-screen m-0 p-0">
+                    {menu=='Projects' && <Projects/>}
+                </div>
+            </div>
         </div>
     )
 };
