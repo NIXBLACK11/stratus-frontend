@@ -6,7 +6,7 @@ import { UserPage } from "./pages/UserPage";
 
 function App() {
   return (
-    <div className='bg-[#000000] min-h-screen'>
+    <div className='bg-[#000000] h-full w-full'>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Landing />} />

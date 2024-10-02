@@ -7,6 +7,7 @@ import { Menu } from "../components/Menu";
 import { Projects } from "../components/Projects";
 import { useRecoilState } from "recoil";
 import { menuState, emailState, errorState } from "../atom";
+import { DetailedProject } from "../components/DetailedProject";
 
 export const UserPage = () => {
     const [_email, setEmail] = useRecoilState(emailState);
@@ -46,6 +47,7 @@ export const UserPage = () => {
                 </div>
                 <div className="w-[70%] min-h-screen m-0 p-0">
                     {menu=='Projects' && <Projects/>}
+                    {menu=='Detailed project' && <DetailedProject/>}
                 </div>
             </div>
         </div>
