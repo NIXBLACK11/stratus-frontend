@@ -1,4 +1,10 @@
 import { PencilIcon, TrashIcon } from "lucide-react";
+import { deleteProject } from "../api/deleteProject";
+import { useParams } from "react-router-dom";
+import { getCookie } from "../utils/saveCookie";
+import { useRecoilState } from "recoil";
+import { errorState } from "../atom";
+import { ErrorPopup } from "./ErrorPopup";
 
 interface DetailedProjectItemProps {
     label: string;
@@ -14,20 +20,35 @@ interface DetailedProjectItemProps {
 }
 
 export const DetailedProjectItem = ({ label, details }: DetailedProjectItemProps) => {
+    // Hooks need to be inside the function component
+    const { email } = useParams<{ email: string }>();
+    const token = getCookie("jwtToken");
+    const [error, setError] = useRecoilState(errorState);
+
     return (
         <div className="flex flex-col items-start justify-center my-10 text-white w-full ">
+            {error && <ErrorPopup message={error} onClose={() => setError(null)} />}
             <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold">{label.toUpperCase()}</h2>
                 <PencilIcon
                     className="ml-24 hover:text-gray-700"
                     onClick={() => {
-
+                        // Edit functionality
                     }}
                 />
                 <TrashIcon 
                     className="ml-24 hover:text-gray-700"
                     onClick={() => {
-
+                        if (!email || !label || !token) {
+                            setError("Missing email, label, or token.");
+                            return;
+                        }
+                        deleteProject(email, label, token).then(success => {
+                            if (!success) {
+                                setError("Failed to delete project.");
+                            }
+                            setError(`Project ${label} deleted successfully!!`);
+                        });
                     }}
                 />
             </div>
