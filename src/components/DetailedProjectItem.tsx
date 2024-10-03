@@ -3,7 +3,7 @@ import { deleteProject } from "../api/deleteProject";
 import { useParams } from "react-router-dom";
 import { getCookie } from "../utils/saveCookie";
 import { useRecoilState } from "recoil";
-import { errorState } from "../atom";
+import { editState, editValueState, errorState } from "../atom";
 import { ErrorPopup } from "./ErrorPopup";
 
 interface DetailedProjectItemProps {
@@ -17,10 +17,13 @@ interface DetailedProjectItemProps {
             alerttype: string[];
         }>
     };
+    projects: string[];
+    setProjects: any;
 }
 
-export const DetailedProjectItem = ({ label, details }: DetailedProjectItemProps) => {
-    // Hooks need to be inside the function component
+export const DetailedProjectItem = ({ label, details, projects, setProjects }: DetailedProjectItemProps) => {
+    const [_editValue, setEditValue] = useRecoilState(editValueState);
+    const [_openEdit, setOpenEdit] = useRecoilState(editState);
     const { email } = useParams<{ email: string }>();
     const token = getCookie("jwtToken");
     const [error, setError] = useRecoilState(errorState);
@@ -33,7 +36,8 @@ export const DetailedProjectItem = ({ label, details }: DetailedProjectItemProps
                 <PencilIcon
                     className="ml-24 hover:text-gray-700"
                     onClick={() => {
-                        // Edit functionality
+                        setOpenEdit(true);
+                        setEditValue(details);
                     }}
                 />
                 <TrashIcon 
@@ -47,6 +51,8 @@ export const DetailedProjectItem = ({ label, details }: DetailedProjectItemProps
                             if (!success) {
                                 setError("Failed to delete project.");
                             }
+                            const newProjects = projects.filter(project => project!=label);
+                            setProjects(newProjects);
                             setError(`Project ${label} deleted successfully!!`);
                         });
                     }}
