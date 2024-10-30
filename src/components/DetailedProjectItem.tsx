@@ -15,19 +15,19 @@ export const DetailedProjectItem = ({ label, details, projects, setProjects }: D
     const [error, setError] = useRecoilState(errorState);
 
     return (
-        <div className="flex flex-col items-start justify-center my-10 text-white w-full ">
+        <div className="flex flex-col items-center justify-center my-10 text-white w-full ">
             {error && <ErrorPopup message={error} onClose={() => setError(null)} />}
             <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold">{label.toUpperCase()}</h2>
                 <PencilIcon
-                    className="ml-24 hover:text-gray-700"
+                    className="ml-24 hover:text-orange-900"
                     onClick={() => {
                         setOpenEdit(true);
                         setEditValue(details);
                     }}
                 />
                 <TrashIcon 
-                    className="ml-24 hover:text-gray-700"
+                    className="ml-24 hover:text-orange-900"
                     onClick={() => {
                         if (!email || !label || !token) {
                             setError("Missing email, label, or token.");
@@ -46,12 +46,12 @@ export const DetailedProjectItem = ({ label, details, projects, setProjects }: D
             </div>
             {/* Check if we have project details */}
             {details && details.AlertTriggers && details.AlertTriggers.length > 0 ? (
-                <div className="flex flex-col items-start w-full">
+                <div className="flex flex-col items-center w-full">
                     {/* Loop through AlertTriggers and display each */}
                     {details.AlertTriggers.map((trigger, idx) => (
                         <div key={idx} className="bg-transparent p-4 rounded-md mb-4 w-2/3">
                             <p className="font-semibold">Site Name: {trigger.sitename}</p>
-                            <p>Site URL: <a href={trigger.siteurl} className="text-blue-400" target="_blank" rel="noopener noreferrer">{trigger.siteurl}</a></p>
+                            <p>Site URL: <a href={trigger.siteurl} className="text-orange-500" target="_blank" rel="noopener noreferrer">{trigger.siteurl}</a></p>
                             <p>Alert Types: {trigger.alerttype.join(", ")}</p>
                         </div>
                     ))}

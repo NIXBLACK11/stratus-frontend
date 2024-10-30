@@ -1,18 +1,20 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { getCookie } from "../utils/saveCookie";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { validate } from "../api/validate";
 import { ErrorPopup } from "../components/ErrorPopup";
 import { Menu } from "../components/Menu";
-import { Projects } from "../components/Projects";
 import { useRecoilState } from "recoil";
 import { menuState, emailState, errorState, successState } from "../atom";
 import { DetailedProject } from "../components/DetailedProject";
 import { SuccessPopup } from "../components/SuccessPopup";
+import { AddProject } from "../components/AddProject";
+import { MonitorProjects } from "../components/MonitorProjects";
+import { Home } from "lucide-react";
 
 export const UserPage = () => {
     const [_email, setEmail] = useRecoilState(emailState);
-    const [menu, setMenu] = useRecoilState(menuState);
+    const [menu, _setMenu] = useRecoilState(menuState);
     const [error, setError] = useRecoilState(errorState);
     const [success, setSuccess] = useRecoilState(successState);
 
@@ -49,8 +51,10 @@ export const UserPage = () => {
                     <Menu/>
                 </div>
                 <div className="w-[70%] min-h-screen m-0 p-0">
-                    {menu=='Projects' && <Projects/>}
-                    {menu=='Detailed project' && <DetailedProject/>}
+                    {menu=='Home' && <Home/>}
+                    {menu=='Projects' && <DetailedProject/>}
+                    {menu=="Add project" && <AddProject/>}
+                    {menu=="Monitor projects" && <MonitorProjects/>}
                 </div>
             </div>
         </div>

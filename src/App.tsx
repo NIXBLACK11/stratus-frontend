@@ -13,7 +13,7 @@ function App() {
           <Route path='/user/:email' element={<UserPage />} />
           {/* <Route path='/projects' element={<AllProjects />} /> */}
         </Routes>
-        <MouseLight color="31, 81, 255" size={1000} opacity={0.2} />
+        <MouseLight color="248, 115, 22" size={1000} opacity={0.2} />
       </BrowserRouter>
     </div>
   )

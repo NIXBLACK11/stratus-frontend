@@ -1,11 +1,11 @@
 import { MenuItem as MenuItemComponent } from "./MenuItem"; // Rename to avoid conflict
-import { Home, FolderPlus, List, Edit, Compass, Trophy, Zap, CreditCard, Delete, TrashIcon } from 'lucide-react';
+import { Home, FolderPlus, List, MonitorCheckIcon } from 'lucide-react';
 
 export const menuItems = [
-  { icon: Home, label: 'Projects' },
+  { icon: Home, label: 'Home' },
   { icon: FolderPlus, label: 'Add project' },
-  { icon: List, label: 'Detailed project' },
-  { icon: TrashIcon, label: 'Delete project' },
+  { icon: List, label: 'Projects' },
+  { icon: MonitorCheckIcon, label: 'Monitor projects' },
 //   { icon: Trophy, label: 'Challenges' },
 //   { icon: Zap, label: 'Spark' },
 //   { icon: CreditCard, label: 'Codepen Pro' },

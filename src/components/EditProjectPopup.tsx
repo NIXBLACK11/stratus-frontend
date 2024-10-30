@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRecoilState } from "recoil";
-import { editState, editValueState, errorState, menuState, successState } from "../atom";
+import { editState, editValueState, errorState, successState } from "../atom";
 import { useParams } from 'react-router-dom';
 import { getCookie } from '../utils/saveCookie';
 import { addProject } from '../api/addProject';
@@ -18,12 +18,11 @@ const alertTypes = [
 ];
 
 export const EditProjectPopup = () => {
-    const [openEdit, setOpenEdit] = useRecoilState(editState);
-    const [menu, setMenu] = useRecoilState(menuState);
+    const [_openEdit, setOpenEdit] = useRecoilState(editState);
     const [editValue, setEditValue] = useRecoilState(editValueState);
     const [localEditValue, setLocalEditValue] = useState<Details>(editValue);
-    const [error, setError] = useRecoilState(errorState);
-    const [success, setSuccess] = useRecoilState(successState);
+    const [_error, setError] = useRecoilState(errorState);
+    const [_success, setSuccess] = useRecoilState(successState);
     const { email } = useParams<{ email: string }>();
 
     const token = getCookie("jwtToken");
@@ -72,7 +71,7 @@ export const EditProjectPopup = () => {
     };
 
     return (
-        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-opacity-50 flex items-center justify-center text-center h-2/3 w-3/5">
+        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-opacity-50 flex items-center justify-center text-center h-5/6 w-5/6">
             <div className="h-2/3 w-3/5 border bg-[#000000] shadow-lg p-4 overflow-y-auto">
                 {localEditValue && localEditValue.AlertTriggers && localEditValue.AlertTriggers.length > 0 ? (
                     <div className="flex flex-col items-start w-full">
@@ -114,13 +113,13 @@ export const EditProjectPopup = () => {
                 <div className="mt-4 flex justify-end">
                     <button
                         onClick={()=>{handleSubmit()}}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded"
                     >
                         Submit
                     </button>
                     <button
                         onClick={() => setOpenEdit(false)}
-                        className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2"
+                        className="bg-transparent border hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2"
                     >
                         Cancel
                     </button>
