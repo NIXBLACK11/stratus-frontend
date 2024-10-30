@@ -6,13 +6,15 @@ import { ErrorPopup } from "../components/ErrorPopup";
 import { Menu } from "../components/Menu";
 import { Projects } from "../components/Projects";
 import { useRecoilState } from "recoil";
-import { menuState, emailState, errorState } from "../atom";
+import { menuState, emailState, errorState, successState } from "../atom";
 import { DetailedProject } from "../components/DetailedProject";
+import { SuccessPopup } from "../components/SuccessPopup";
 
 export const UserPage = () => {
     const [_email, setEmail] = useRecoilState(emailState);
     const [menu, setMenu] = useRecoilState(menuState);
     const [error, setError] = useRecoilState(errorState);
+    const [success, setSuccess] = useRecoilState(successState);
 
     const { email } = useParams<{ email: string }>();
     const token = getCookie("jwtToken");
@@ -41,6 +43,7 @@ export const UserPage = () => {
     return (
         <div className="m-0 p-0 bg-transparent">
             {error && <ErrorPopup message={error} onClose={() => setError(null)} />}
+            {success && <SuccessPopup message={success} onClose={() => setSuccess(null)} />}    
             <div className="flex flex-row">
                 <div className="w-[30%] min-h-screen m-0 p-0">
                     <Menu/>

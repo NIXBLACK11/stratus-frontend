@@ -5,21 +5,7 @@ import { getCookie } from "../utils/saveCookie";
 import { useRecoilState } from "recoil";
 import { editState, editValueState, errorState } from "../atom";
 import { ErrorPopup } from "./ErrorPopup";
-
-interface DetailedProjectItemProps {
-    label: string;
-    details: {
-        username?: string;
-        projectname?: string;
-        AlertTriggers?: Array<{
-            sitename: string;
-            siteurl: string;
-            alerttype: string[];
-        }>
-    };
-    projects: string[];
-    setProjects: any;
-}
+import { DetailedProjectItemProps } from "../interface/fullDetailsInterface";
 
 export const DetailedProjectItem = ({ label, details, projects, setProjects }: DetailedProjectItemProps) => {
     const [_editValue, setEditValue] = useRecoilState(editValueState);

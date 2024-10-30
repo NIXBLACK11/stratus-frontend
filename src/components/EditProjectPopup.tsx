@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useRecoilState } from "recoil";
-import { editState, editValueState } from "../atom";
+import { editState, editValueState, errorState, menuState, successState } from "../atom";
+import { useParams } from 'react-router-dom';
+import { getCookie } from '../utils/saveCookie';
+import { addProject } from '../api/addProject';
+import { Details } from "../interface/detailsInterface";
 
 const alertTypes = [
     'WebsiteUnreachable',
@@ -15,11 +19,17 @@ const alertTypes = [
 
 export const EditProjectPopup = () => {
     const [openEdit, setOpenEdit] = useRecoilState(editState);
+    const [menu, setMenu] = useRecoilState(menuState);
     const [editValue, setEditValue] = useRecoilState(editValueState);
-    const [localEditValue, setLocalEditValue] = useState(editValue);
+    const [localEditValue, setLocalEditValue] = useState<Details>(editValue);
+    const [error, setError] = useRecoilState(errorState);
+    const [success, setSuccess] = useRecoilState(successState);
+    const { email } = useParams<{ email: string }>();
+
+    const token = getCookie("jwtToken");
 
     const handleInputChange = (index: number, field: string, value: string) => {
-        const updatedTriggers = localEditValue.AlertTriggers ? [...localEditValue.AlertTriggers] : [];
+        const updatedTriggers = [...localEditValue.AlertTriggers!];
         if (updatedTriggers[index]) {
             updatedTriggers[index] = { ...updatedTriggers[index], [field]: value };
             setLocalEditValue({ ...localEditValue, AlertTriggers: updatedTriggers });
@@ -27,31 +37,43 @@ export const EditProjectPopup = () => {
     };
 
     const handleAlertTypeChange = (index: number, alertType: string) => {
-        const updatedTriggers = localEditValue.AlertTriggers ? [...localEditValue.AlertTriggers] : [];
+        const updatedTriggers = [...localEditValue.AlertTriggers!];
         if (updatedTriggers[index]) {
             const currentAlertTypes = updatedTriggers[index].alerttype;
-            updatedTriggers[index].alerttype = currentAlertTypes.includes(alertType)
+            const newAlertTypes = currentAlertTypes.includes(alertType)
                 ? currentAlertTypes.filter(type => type !== alertType)
                 : [...currentAlertTypes, alertType];
+            updatedTriggers[index] = { ...updatedTriggers[index], alerttype: newAlertTypes };
             setLocalEditValue({ ...localEditValue, AlertTriggers: updatedTriggers });
         }
     };
 
-    // const handleSubmit = async () => {
-    //     try {
-    //         // Call the updateValue function (assuming it's imported from the API folder)
-    //         await updateValue(localEditValue);
-    //         setEditValue(localEditValue);
-    //         setOpenEdit(false);
-    //     } catch (error) {
-    //         console.error("Error updating value:", error);
-    //         // Handle error (e.g., show an error message to the user)
-    //     }
-    // };
+    const handleSubmit = async () => {
+        if(!token || !email || !localEditValue) {
+            setError("Invalid request");
+            return;
+        }
+
+        try {
+            const success = await addProject(email, token, localEditValue);
+            if(!success) {
+                setError("Project update unsuccessfull")
+                return;
+            } else {
+                setSuccess("Project updated successfully!");
+                setEditValue(localEditValue);
+                setOpenEdit(false);
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error("Error updating value:", error);
+            setError("Project Update unsuccessfull");
+        }
+    };
 
     return (
         <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-opacity-50 flex items-center justify-center text-center h-2/3 w-3/5">
-            <div className="h-2/3 w-3/5 border bg-[#000000] bg-opacity-75 shadow-lg p-4 overflow-y-auto">
+            <div className="h-2/3 w-3/5 border bg-[#000000] shadow-lg p-4 overflow-y-auto">
                 {localEditValue && localEditValue.AlertTriggers && localEditValue.AlertTriggers.length > 0 ? (
                     <div className="flex flex-col items-start w-full">
                         {localEditValue.AlertTriggers.map((trigger, idx) => (
@@ -91,7 +113,7 @@ export const EditProjectPopup = () => {
                 )}
                 <div className="mt-4 flex justify-end">
                     <button
-                        onClick={()=>{console.log('clicked')}}
+                        onClick={()=>{handleSubmit()}}
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     >
                         Submit

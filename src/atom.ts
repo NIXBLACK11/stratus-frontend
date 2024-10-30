@@ -1,14 +1,5 @@
 import { atom } from 'recoil';
-
-interface Details {
-    username?: string;
-    projectname?: string;
-    AlertTriggers?: Array<{
-        sitename: string;
-        siteurl: string;
-        alerttype: string[];
-    }>
-}
+import { Details } from './interface/detailsInterface';
 
 export const signinState = atom<boolean>({
     key: 'signinState',
@@ -27,6 +18,11 @@ export const emailState = atom<string>({
 
 export const errorState = atom<string | null>({
     key: 'errorState',
+    default: null,
+});
+
+export const successState = atom<string | null>({
+    key: 'successState',
     default: null,
 });
 
