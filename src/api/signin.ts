@@ -18,18 +18,17 @@ export async function signin(userData: User): Promise<boolean> {
             return false;
         }
         setCookie("jwtToken", token);
-        return true; // Signin successful
+        return true;
     } catch (error) {
         if (axios.isAxiosError(error)) {
             const axiosError: AxiosError = error;
             console.log(axiosError);
-            // Check response status here
             if (axiosError.response && axiosError.response.status === 401) {
                 console.log("Unauthorized - Username or password incorrect");
             } else {
                 console.log("An error occurred during signin");
             }
         }
-        return false; // Signin failed
+        return false;
     }
 }

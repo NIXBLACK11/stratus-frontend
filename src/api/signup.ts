@@ -19,13 +19,12 @@ export async function signup(userData: User): Promise<boolean> {
         if (axios.isAxiosError(error)) {
             const axiosError: AxiosError = error;
             console.log(axiosError);
-            // Check response status here
             if (axiosError.response && axiosError.response.status === 401) {
                 console.log("Unauthorized - Username or password incorrect");
             } else {
                 console.log("An error occurred during signup");
             }
         }
-        return false; // Signin failed
+        return false;
     }
 }

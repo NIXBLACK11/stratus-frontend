@@ -12,7 +12,7 @@ interface MouseLightProps {
 }
 
 const MouseLight: React.FC<MouseLightProps> = ({
-  color = '0, 255, 0', // Default green color
+  color = '0, 255, 0',
   size = 300,
   opacity = 0.3
 }) => {

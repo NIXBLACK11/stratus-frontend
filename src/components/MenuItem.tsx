@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import { menuState } from "../atom";
 
 interface MenuItemProps {
-    icon: LucideIcon; // icon type
+    icon: LucideIcon;
     label: string;
 }
   

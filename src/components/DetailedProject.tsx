@@ -26,7 +26,6 @@ export const DetailedProject = () => {
                 return;
             }
 
-            // Fetching all projects for the user
             const proj = await getProjects(email, token);
             if (proj == null) {
                 setError("User has no projects");
@@ -34,7 +33,6 @@ export const DetailedProject = () => {
             }
             setProjects(proj);
 
-            // Fetching detailed information for each project
             const detailedProjPromises = proj.map(async (projName: string) => {
                 const details = await getDetailedProjects(email, projName, token);
                 if (!details) {
@@ -44,7 +42,6 @@ export const DetailedProject = () => {
                 return details;
             });
 
-            // Resolving all the promises and filtering out null values
             const resolvedDetailedProjects = await Promise.all(detailedProjPromises);
             const validDetailedProjects = resolvedDetailedProjects.filter(Boolean);
 

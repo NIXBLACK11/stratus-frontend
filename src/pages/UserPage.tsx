@@ -10,7 +10,6 @@ import { DetailedProject } from "../components/DetailedProject";
 import { SuccessPopup } from "../components/SuccessPopup";
 import { AddProject } from "../components/AddProject";
 import { MonitorProjects } from "../components/MonitorProjects";
-import { Home } from "lucide-react";
 
 export const UserPage = () => {
     const [_email, setEmail] = useRecoilState(emailState);
@@ -47,11 +46,10 @@ export const UserPage = () => {
             {error && <ErrorPopup message={error} onClose={() => setError(null)} />}
             {success && <SuccessPopup message={success} onClose={() => setSuccess(null)} />}    
             <div className="flex flex-row">
-                <div className="w-[30%] min-h-screen m-0 p-0">
+                <div className="w-[15%] min-h-screen m-0 p-0">
                     <Menu/>
                 </div>
-                <div className="w-[70%] min-h-screen m-0 p-0">
-                    {menu=='Home' && <Home/>}
+                <div className="w-[85%] min-h-screen m-0 p-0">
                     {menu=='Projects' && <DetailedProject/>}
                     {menu=="Add project" && <AddProject/>}
                     {menu=="Monitor projects" && <MonitorProjects/>}
