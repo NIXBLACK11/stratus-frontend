@@ -8,6 +8,7 @@ import {
   LineChart,
   ChevronRight,
   ArrowRight,
+  Github,
 } from "lucide-react";
 
 export const Landing = () => {
@@ -25,7 +26,6 @@ export const Landing = () => {
 
   return (
     <div className="min-h-screen bg-black overflow-hidden">
-      {/* Animated Background Gradient */}
       <div className="fixed inset-0 bg-black">
         <div className="absolute inset-0 bg-gradient-to-r from-orange-600/20 to-orange-900/20 animate-pulse" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,140,0,0.1)_0%,transparent_70%)] animate-pulse" />
@@ -67,7 +67,7 @@ export const Landing = () => {
                          group overflow-hidden"
               >
                 <span className="relative z-10 flex items-center space-x-2">
-                  <span>Start Monitorig</span>
+                  <span>Start Monitoring</span>
                   <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </span>
                 <div
@@ -75,12 +75,23 @@ export const Landing = () => {
                               opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 />
               </button>
+              <a
+                href="https://github.com/NIXBLACK11/stratus-core"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative px-6 py-2.5 rounded-lg border-2 border-orange-500/50
+                         text-orange-400 font-medium transition-all duration-300
+                         hover:bg-orange-500/10 hover:-translate-y-0.5
+                         flex items-center space-x-2"
+              >
+                <Github className="h-5 w-5" />
+                <span>CLI Tool</span>
+              </a>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* Hero Section */}
       <section className="relative pt-32 lg:pt-40 pb-20 px-6">
         <div className="max-w-6xl mx-auto text-center relative z-10">
           {/* Floating Icon */}
@@ -90,7 +101,6 @@ export const Landing = () => {
             </div>
           </div>
 
-          {/* Main Heading */}
           <h1 className="text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight">
             Never Miss a Downtime with
             <span
@@ -101,12 +111,10 @@ export const Landing = () => {
             </span>
           </h1>
 
-          {/* Subheading */}
           <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
             Real-time Monitoring, Instant Alerts to keep your site running smoothly.
           </p>
 
-          {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row justify-center gap-6">
             <button
               onClick={()=>{navigate('/login')}}
@@ -137,7 +145,6 @@ export const Landing = () => {
             </a>
           </div>
 
-          {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mt-20">
             {[
               { number: "99.9%", label: "Errors detected" },
@@ -164,7 +171,6 @@ export const Landing = () => {
         </div>
       </section>
 
-      {/* Features Section */}
       <section id="features" className="py-20 relative">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -227,7 +233,6 @@ export const Landing = () => {
         </div>
       </section>
 
-      {/* Pricing Section */}
       <section id="pricing" className="py-20 relative">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -269,7 +274,6 @@ export const Landing = () => {
         </div>
       </section>
 
-      {/* Final CTA Section */}
       <div className="relative z-10 py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-4xl font-bold text-white mb-6">
