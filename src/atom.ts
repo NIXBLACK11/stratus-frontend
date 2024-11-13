@@ -8,7 +8,7 @@ export const signinState = atom<boolean>({
 
 export const menuState = atom<string>({
     key: 'menuState',
-    default: 'Home',
+    default: 'Projects',
 });
 
 export const emailState = atom<string>({
